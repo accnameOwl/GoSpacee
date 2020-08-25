@@ -14,8 +14,8 @@ func main() {
 	Configuration := GetConfig("main")
 
 	// * Flags
-	flag.BoolVar(&Configuration.Remote, "remote", false, "Download data locally, instead of using remote, true or false")
 	flag.BoolVar(&Configuration.Debug, "debug", false, "Debug mode")
+	flag.BoolVar(&Configuration.SaveFetched, "save-fetched", true, "Save fetched data locally")
 	flag.Parse()
 
 	var Authorization = &auth.TestBody
@@ -31,7 +31,7 @@ func main() {
 
 	// * new Mars weather station
 	InSight := insight.New("1.0", "json", "DEMO_KEY")
-	err := InSight.Get(Configuration.Remote)
+	err := InSight.Get(Configuration.SaveFetched)
 	if err != nil {
 		panic(err.Error())
 	}

@@ -3,13 +3,10 @@ package insight
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	"reflect"
-	"strconv"
 )
 
 // MWS ...
@@ -42,7 +39,7 @@ func (m *MWS) POST() string {
 
 // Get ...
 // get MWS data, pulled from the official InSight API
-func (m *MWS) Get(remote bool, param ...string) error {
+func (m *MWS) Get(savefetchedtofile bool, param ...string) error {
 	// request json table from m.HTTP
 	res, err := http.Get(m.POST())
 	if err != nil {
@@ -58,49 +55,8 @@ func (m *MWS) Get(remote bool, param ...string) error {
 	var contents jsonContent
 	json.Unmarshal([]byte(body), &contents)
 
-	// * print each data value to console.
-	// 		loop through lists
-	// ! FIX LOOPING OF DATA MAP
-	// ? json example: https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0
-
-	fields := reflect.TypeOf(contents)
-	values := reflect.ValueOf(contents)
-	for i := 0; i < len(contents.sols); i++ {
-		field := fields.Field(i)
-		value := values.Field(i)
-		fmt.Print("Type:", field.Type, ",", field.Name, "=", value, "\n")
-
-		var t assert.TestingT
-		switch value.Kind() {
-		case reflect.String:
-			v := value.String()
-			fmt.Print(v, "\n")
-		case reflect.Int:
-			v := strconv.FormatInt(value.Int(), 10)
-			fmt.Print(v, "\n")
-		case reflect.Int32:
-			v := strconv.FormatInt(value.Int(), 10)
-			fmt.Print(v, "\n")
-		default:
-			assert.Fail(t, "Not support type of struct")
-		}
-	}
-	// what i'm used to doing
-	// ! LF recursive func for maps in maps in maps etc..
-	/* for i, v := range contents.sols {
-		fmt.Printf("%b", v)
-		if len(v[i]) {
-			for x, y := range v[i] {
-				fmt.Printf("%b", y)
-				if y && y[x] {
-					for b, c := range y[x] {
-						fmt.Printf("%b", c)
-					}
-				}
-			}
-		}
-	} */
-	if remote == false {
+	// @param download
+	if savefetchedtofile == true {
 		// create new file
 		file, err := os.OpenFile(
 			"test.txt",

@@ -15,8 +15,8 @@ Pulls data from NASA API.
 
 ## Usage
 **Runtime params**  
-``-remote=[bool]``  
-Download fetched data from NASA API
+``-save-fetched``  
+Save fetched data locally  
 ``-debug``  
 Run in debug  
 

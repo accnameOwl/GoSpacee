@@ -10,9 +10,9 @@ import (
 //
 // use CatchConfigurations to fetch data
 type Configuration struct {
-	Auth   string
-	Remote bool
-	Debug  bool
+	Auth        string
+	Debug       bool
+	SaveFetched bool
 }
 
 // GetConfig ...
