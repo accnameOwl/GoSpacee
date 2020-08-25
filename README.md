@@ -16,9 +16,7 @@ Pulls data from NASA API.
 ## Usage
 **Runtime params**  
 ``-save-fetched``  
-Save fetched data locally  
-``-debug``  
-Run in debug  
+``-debug``    
 
 ## Installation
  `@ go get github/accnameowl/GoSpacee`
