@@ -36,15 +36,3 @@ func main() {
 		panic(err.Error())
 	}
 }
-
-// arrayFlags ...
-type arrayFlags []string
-
-// mainFlags ...
-// scraped on main()
-var mainFlags arrayFlags
-
-func (i *arrayFlags) Set(value string) error {
-	*i = append(*i, value)
-	return nil
-}
