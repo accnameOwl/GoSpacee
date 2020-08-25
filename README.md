@@ -3,7 +3,7 @@
 <p align="center">
     <img src="gopher_1.png" alt="gopher" width="250"/>  
 </p>
-Reads events from google calendar, and creates a database of it's values.
+Combined package used to fetch data from the NASA API
 
 ## About
 Pulls data from NASA API.  
@@ -14,7 +14,11 @@ Pulls data from NASA API.
 3. Get functions through the NASA interface type
 
 ## Usage
-N/A
+**Runtime params**  
+    -remote=[bool]  
+        Download fetched data from NASA API
+    -debug  
+        Run in debug  
 
 ## Installation
  `@ go get github/accnameowl/Calendb`
