@@ -3,42 +3,35 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"github.com/accnameowl/GoSpacee/auth"
-	"github.com/accnameowl/GoSpacee/config"
 	"github.com/accnameowl/GoSpacee/insight"
 	"github.com/accnameowl/GoSpacee/test"
+	"time"
 )
-
-// Config ...
-// Catches information from 'config.json'
-var Config config.Conf
-
-func init() {
-	Config = config.CatchConfigurations("./config/config.json")
-}
 
 func main() {
 
+	Configuration := GetConfig("main")
+
 	// * Flags
-	flag.BoolVar(&Config.Remote, "no-rem", false, "false: Download data locally, true(defalt): Fetch remotely")
-	flag.BoolVar(&Config.Debug, "debug", true, "Debug mode")
-	Authorization := auth.Body{
-		URL:   "https://api.nasa.gov/planetary/apod",
-		Token: "QeHSqI7jLoVAvghkd0SF0ZJ03v1XT2XlfY4dpBLT",
-	}
+	flag.BoolVar(&Configuration.Remote, "remote", false, "Download data locally, instead of using remote, true or false")
+	flag.BoolVar(&Configuration.Debug, "debug", false, "Debug mode")
+	flag.Parse()
 
-	// await server response
-	await := <-test.ServerConnection(Authorization)
-
-	if Config.Debug {
-		fmt.Print("Connecting...")
-		fmt.Printf("Connected to: %s\nToken: %s\n%s", Authorization.URL, Authorization.Token, status)
+	var Authorization = &auth.TestBody
+	// if debug
+	if Configuration.Debug {
+		fmt.Println("Starting app in Debug mode")
+		time.Sleep(time.Second * 1)
+		//await server response
+		fmt.Println("Connecting...")
+		await := <-test.ServerConnection(Authorization)
+		fmt.Printf("Connected to: %s\nToken: %s\n%s\n\n", Authorization.URL, Authorization.Token, await)
 	}
 
 	// * new Mars weather station
 	InSight := insight.New("1.0", "json", "DEMO_KEY")
-	err = InSight.Get()
+	err := InSight.Get(Configuration.Remote)
 	if err != nil {
 		panic(err.Error())
 	}

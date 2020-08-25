@@ -4,6 +4,14 @@ import (
 	"net/http"
 )
 
+// TestBody ...
+// TestBody body, containing connection URL and token.
+// used for testing connection with API token
+var TestBody = Body{
+	URL:   "https://api.nasa.gov/planetary/apod",
+	Token: "QeHSqI7jLoVAvghkd0SF0ZJ03v1XT2XlfY4dpBLT",
+}
+
 // Body ...
 //
 // body of an authorization task

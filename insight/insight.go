@@ -3,14 +3,13 @@ package insight
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"reflect"
 	"strconv"
-
-	"github.com/stretchr/testify/assert"
 )
 
 // MWS ...
@@ -43,7 +42,7 @@ func (m *MWS) POST() string {
 
 // Get ...
 // get MWS data, pulled from the official InSight API
-func (m *MWS) Get() error {
+func (m *MWS) Get(remote bool, param ...string) error {
 	// request json table from m.HTTP
 	res, err := http.Get(m.POST())
 	if err != nil {
@@ -101,23 +100,25 @@ func (m *MWS) Get() error {
 			}
 		}
 	} */
-	// create new file
-	file, err := os.OpenFile(
-		"test.txt",
-		os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666,
-	)
-	if err != nil {
-		panic(err.Error())
-	}
-	defer file.Close()
+	if remote == false {
+		// create new file
+		file, err := os.OpenFile(
+			"test.txt",
+			os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666,
+		)
+		if err != nil {
+			panic(err.Error())
+		}
+		defer file.Close()
 
-	// write json body to file
-	byteSlice := body
-	bytesWritten, err := file.Write(byteSlice)
-	if err != nil {
-		panic(err.Error())
+		// write json body to file
+		byteSlice := body
+		bytesWritten, err := file.Write(byteSlice)
+		if err != nil {
+			panic(err.Error())
+		}
+		log.Printf("Wrote %d bytes.\n", bytesWritten)
 	}
-	log.Printf("Wrote %d bytes.\n", bytesWritten)
 	return nil
 }
 
