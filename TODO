@@ -14,12 +14,12 @@ Long term agenda:
         Pulls error messages from the header and outputs the response data in console.
     -     
 Todo list:
-    ☐ Pull API documentation from the API @created(20-08-25 07:50)
-    ☐ Integrate structs with HTTP request functions @created(20-08-25 07:51)   
+    ✔ Pull API documentation from the API @created(20-08-25 13:22) @done(20-08-25 13:23)
+    ✔ Integrate structs with HTTP request functions @created(20-08-25 07:51) @done(20-08-25 13:23)
         - request both data and errors if any
     
     Mars Weather Service API: 
-        Get latest weather reports from Elysium Planitia 
+        ✔ Get latest weather reports from Elysium Planitia @created(20-08-25 13:23) @done(20-08-25 13:23)
             $params
                 version     float   1.0
                 feedtype    string  json
