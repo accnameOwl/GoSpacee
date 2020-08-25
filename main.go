@@ -11,16 +11,16 @@ import (
 
 func main() {
 
-	Configuration := GetConfig("main")
+	Configurations := GetConfig("main")
 
 	// * Flags
-	flag.BoolVar(&Configuration.Debug, "debug", false, "Debug mode")
-	flag.BoolVar(&Configuration.SaveFetched, "save-fetched", true, "Save fetched data locally")
+	flag.BoolVar(&Configurations.Debug, "debug", false, "Debug mode")
+	flag.BoolVar(&Configurations.SaveFetched, "save-fetched", true, "Save fetched data locally")
 	flag.Parse()
 
 	var Authorization = &auth.TestBody
 	// if debug
-	if Configuration.Debug {
+	if Configurations.Debug {
 		fmt.Println("Starting app in Debug mode")
 		time.Sleep(time.Second * 1)
 		//await server response
@@ -30,8 +30,8 @@ func main() {
 	}
 
 	// * new Mars weather station
-	InSight := insight.New("1.0", "json", "DEMO_KEY")
-	err := InSight.Get(Configuration.SaveFetched)
+	InSight := insight.New("1.0", "json", Configurations.Auth)
+	err := InSight.Get(Configurations.SaveFetched)
 	if err != nil {
 		panic(err.Error())
 	}
