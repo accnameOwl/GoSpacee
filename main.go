@@ -1,21 +1,19 @@
 package main
 
 import (
-	"encoding/json"
-	"flag"
 	"fmt"
-	"log"
-	"os"
 
-	auth "github.com/accnameowl/GoSpacee/Auth"
+	"github.com/accnameowl/GoSpacee/auth"
+	"github.com/accnameowl/GoSpacee/config"
+	"github.com/accnameowl/GoSpacee/insight"
 )
 
 // Config ...
 // Catches information from 'config.json'
-var Config Configuration
+var Config config.Conf
 
 func init() {
-	Config = CatchConfigurations("./configs/config.json")
+	Config = config.CatchConfigurations("./config/config.json")
 }
 
 func main() {
@@ -30,31 +28,11 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("Connected to: %s\nToken: %s\n%s", Authorization.URL, Authorization.Token, status)
-}
 
-// Configuration ...
-// holds the value of every json type in config.json
-type Configuration struct {
-	Auth string
-}
-
-// CatchConfigurations ...
-// Returns Configuration struct with data pulled from config.json and stores it to
-// /etc/config.conf
-func CatchConfigurations(fileDir string) Configuration {
-	c := flag.String("c", fileDir, "Specify the configuration file")
-	flag.Parse()
-	file, err := os.Open(*c)
+	// * new Mars weather station
+	InSight := insight.New("1.0", "json", "DEMO_KEY")
+	err = InSight.Get()
 	if err != nil {
-		log.Fatal("Can't open config file: ", err)
+		panic(err.Error())
 	}
-	defer file.Close()
-
-	decoder := json.NewDecoder(file)
-	config := Configuration{}
-	err = decoder.Decode(&config)
-	if err != nil {
-		log.Fatal("Can't decode config JSON: ", err)
-	}
-	return config
 }

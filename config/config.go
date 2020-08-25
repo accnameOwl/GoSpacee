@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"encoding/json"
@@ -7,17 +7,19 @@ import (
 	"os"
 )
 
-// Configuration ...
-// holds the value of every json type in config.json
-type Configuration struct {
+// Conf ...
+// datacollection from config.json,
+//
+// use CatchConfigurations to fetch data
+type Conf struct {
 	Auth string
 }
 
 // CatchConfigurations ...
 // Returns Configuration struct with data pulled from config.json and stores it to
 // /etc/config.conf
-func CatchConfigurations(fileDir string) Configuration {
-	c := flag.String("c", "/etc/config.conf", "config.json")
+func CatchConfigurations(fileDir string) Conf {
+	c := flag.String("c", fileDir, "Specify the configuration file")
 	flag.Parse()
 	file, err := os.Open(*c)
 	if err != nil {
@@ -26,8 +28,8 @@ func CatchConfigurations(fileDir string) Configuration {
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
-	config := Configuration{}
-	err = decoder.Decone(&Config)
+	config := Conf{}
+	err = decoder.Decode(&config)
 	if err != nil {
 		log.Fatal("Can't decode config JSON: ", err)
 	}
