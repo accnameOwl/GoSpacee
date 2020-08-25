@@ -15,12 +15,12 @@ Pulls data from NASA API.
 
 ## Usage
 **Runtime params**  
-    -remote=[bool]  
+``    -remote=[bool]  
         Download fetched data from NASA API
     -debug  
         Run in debug  
-
+``
 ## Installation
- `@ go get github/accnameowl/Calendb`
+ `@ go get github/accnameowl/GoSpacee`
 
 
