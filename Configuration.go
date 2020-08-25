@@ -13,10 +13,10 @@ type Configuration struct {
 	Auth string
 }
 
-// GetConfigurations ...
+// CatchConfigurations ...
 // Returns Configuration struct with data pulled from config.json and stores it to
 // /etc/config.conf
-func GetConfigurations(fileDir string) Configuration {
+func CatchConfigurations(fileDir string) Configuration {
 	c := flag.String("c", "/etc/config.conf", "config.json")
 	flag.Parse()
 	file, err := os.Open(*c)

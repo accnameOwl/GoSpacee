@@ -1,0 +1,50 @@
+
+
+Short term agenda:
+    - Web service rate limits
+        1. Needs to catch information of trafic/limitations
+            X-RateLimit-Limit
+            X-RateLimit-Remaining
+            Trafic limitations is a metadata on every pull request in each API tool
+
+Long term agenda:
+    - Data types for individual API tools
+    - Logging and Debugging
+    - Error message class
+        Pulls error messages from the header and outputs the response data in console.
+    -     
+Todo list:
+    ☐ Pull API documentation from the API @created(20-08-25 07:50)
+    ☐ Integrate structs with HTTP request functions @created(20-08-25 07:51)   
+        - request both data and errors if any
+    
+    Mars Weather Service API: 
+        Get latest weather reports from Elysium Planitia 
+            $params
+                version     float   1.0
+                feedtype    string  json
+                api_key     string  "${api_key}"
+        ☐ Fharenheit degree values from given date @created(20-08-25 07:59)
+        ☐ Wind speeds from given date @created(20-08-25 08:04)
+    NeoW:
+        With NeoWs a user can 
+            search for Asteroids based on their closest approach date to Earth
+            lookup a specific Asteroid with its NASA JPL small body id
+            as well as browse the overall data-set
+        Feed:
+            $params
+                start_date  YYYY-MM-DD  none
+                end_date    YYYY-MM-DD  7 days after start_date
+                api_key     string      "${api_key}"
+            ☐ Fetch Asteroid feed @created(20-08-25 08:13)
+                GET https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=API_KEY 
+        Lookup:
+            $params
+                asteroid_id     int     none
+                api_key         string  "${api_key}"
+            ☐ Fetch specific Asteroid @created(20-08-25 08:15)
+                GET https://api.nasa.gov/neo/rest/v1/neo/ID=int?api_key=DEMO_KEY
+        Browse:
+            Browse overall Asteroid data-set
+            ☐ Fetch json from browse @created(20-08-25 08:16)
+                GET https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=DEMO_KEY

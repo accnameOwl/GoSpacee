@@ -12,11 +12,11 @@ type Body struct {
 	Token string
 }
 
-// ConnectToURL ...
-// Connects to *Body URL, with *Body Token as a task
+// Connect ...
+// Connects to *Body URL, with auth *Body.token
 //
 // @return: Response Status, error
-func (auth *Body) ConnectToURL() (string, error) {
+func (auth *Body) Connect() (string, error) {
 	// Get response from Body.URL
 	response, err := http.Get(auth.URL + auth.Token)
 	if err != nil {
