@@ -15,13 +15,13 @@ type Body struct {
 // Connect ...
 // Connects to *Body URL, with auth *Body.token
 //
-// @return: Response Status, error
-func (auth *Body) Connect() (string, error) {
+// @return: Response Status
+func (auth *Body) Connect() string {
 	// Get response from Body.URL
-	response, err := http.Get(auth.URL + auth.Token)
+	response, err := http.Get(auth.URL + "?api_key=" + auth.Token)
 	if err != nil {
-		return response.Status, err
+		panic(err.Error())
 	}
 	defer response.Body.Close()
-	return response.Status, nil
+	return response.Status
 }
