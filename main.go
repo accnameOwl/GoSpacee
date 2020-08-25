@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/accnameowl/GoSpacee/auth"
+	auth "github.com/accnameowl/GoSpacee/Auth"
 )
 
 // Config ...
@@ -15,19 +15,21 @@ import (
 var Config Configuration
 
 func init() {
-	Config = CatchConfigurations("./config/config.json")
-	fmt.Println(Config.Auth)
+	Config = CatchConfigurations("./configs/config.json")
 }
 
 func main() {
 
-	authTest := auth.Body{
+	Authorization := auth.Body{
 		URL:   "https://api.nasa.gov/planetary/apod",
 		Token: "?api_key=QeHSqI7jLoVAvghkd0SF0ZJ03v1XT2XlfY4dpBLT",
 	}
 
-	RunTests(authTest)
-	res := authTest.Test()
+	status, err := Authorization.Connect()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Connected to: %s\nToken: %s\n%s", Authorization.URL, Authorization.Token, status)
 }
 
 // Configuration ...

@@ -4,19 +4,19 @@ import (
 	"net/http"
 )
 
-// Auth ...
+// Body ...
 //
 // body of an authorization task
-type Auth struct {
+type Body struct {
 	URL   string
 	Token string
 }
 
-// ConnectToURL ...
+// Connect ...
 // Connects to *Body URL, with *Body Token as a task
 //
 // @return: Response Status, error
-func (auth *Auth) ConnectToURL() (string, error) {
+func (auth *Body) Connect() (string, error) {
 	// Get response from Body.URL
 	response, err := http.Get(auth.URL + auth.Token)
 	if err != nil {
